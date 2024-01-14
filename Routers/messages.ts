@@ -20,6 +20,11 @@ messageRouter.get('/', async (req, res) => {
     let arrayOfMessage: {date: string, message: string}[] = [];
     const files = fs.readdirSync(path);
 
+    files.forEach(file => {
+        const message = fs.readFileSync(`${path}/${file}`, 'utf-8');
+        arrayOfMessage.push(JSON.parse(message));
+    });
+
     res.send(arrayOfMessage.reverse().slice(0, 5));
 });
 export default messageRouter
